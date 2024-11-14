@@ -47,9 +47,14 @@ const checkBtn = document.getElementById("check-btn");
 const clearBtn = document.getElementById("clear-btn");
 const resultParagraph = document.getElementById("result_p")
 
+
+// change result div
+const showResult = (text, judge) => resultParagraph.innerText = `${judge} US number: ${text}`;
+const eraseResult = () => resultParagraph.innerText = "";
+
 //parser
 const parse = text => {
-    // you should accpet (,), space(replace to underbar), dash only
+    // you should accep               t (,), space(replace to underbar), dash only
     // possible index for '(' = 0,2 
     // possible index for ')' = 4,5
     // possible index for '-' = 3,4,7,8
@@ -66,7 +71,7 @@ const parse = text => {
     
 
     //result msg    
-    const showResult = (text, eval) => resultParagraph.innerText = `${eval} US number: ${text}`;
+    
 
     //parse
     const textToNums = text.replace(availSignRegex, "").split("").map(el => parseInt(el));
@@ -87,4 +92,5 @@ checkBtn.addEventListener("click", () => {
 
 clearBtn.addEventListener("click", () => {
     getInputValue.value = "";    
+    eraseResult();
 })
