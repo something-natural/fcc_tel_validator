@@ -147,7 +147,7 @@ const parse = text => {
     const test8 = text => {
         const regex = /\)/;
         const regexPair = /\(/;
-        if (indexToArray(text,regex) !== indexToArray(text,regexPair)){
+        if (indexToArray(text,regex).length !== indexToArray(text,regexPair).length){
             invalidReason.push("bracketpaircheck_faild");
         };
     };
