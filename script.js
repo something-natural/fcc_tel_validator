@@ -160,7 +160,8 @@ const parse = text => {
         test4,
         test5,
         test6,
-        test7
+        test7,
+        test8
     };
     let testnumber = 1;
     while ( invalidReason.length < 1  ){
