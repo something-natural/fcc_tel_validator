@@ -1,13 +1,5 @@
 /*
-Todos
-
-1. declare variables to get input value, add event listener, change inner text of result div (done)
-2. add event listener to two buttons(done)
-3. when checkbtn clicked
-   a. if there is no value, display "you should input a telephone number"
-   b. if ther is value, parse value -> evaluate value -> display result (valid / invalid)
-
-4. result should be
+ result should be
     a. valid
       1 555-555-5555
       1 (555) 555-5555
@@ -45,17 +37,14 @@ Todos
 const getInputValue = document.getElementById("user-input");
 const checkBtn = document.getElementById("check-btn");
 const clearBtn = document.getElementById("clear-btn");
-const resultParagraph = document.getElementById("result_p")
-
+const resultParagraph = document.getElementById("result_p");
 
 // change result div
 const makeResultText = (text, judge = "none") => judge === "none" ? resultParagraph.innerText = "" : resultParagraph.innerText = `${judge} US number: ${text}`;
 
-// evaluate
 
 //parser
-const parse = text => {  
-    
+const parse = text => {      
     const invalidReason = []; // object to store invalid reasons
 
     //regex
@@ -64,53 +53,51 @@ const parse = text => {
     //coverter
     const textToNums = text => text.replace(availSignRegex, "").split("").map(el => parseInt(el));    
 
-
-    // now evaluate
-    /*
-    like this?
-    const test1 = (){};
-    const test2 = (){};
-    const test3 = (){};
-    const tests = { test1, test2, test3, test4...};
-    let testnumber = 1;
-    
-    invalidReason.length === 0 ? makeResultText(text, "Valid") : makeResultText(text, "invalid")
-    */
-
     // checkLength  
     const test1 = text => {
-        const numsArray = textToNums(text);
-        console.log(numsArray.length);
+        const numsArray = textToNums(text);        
         if (numsArray.length !== 11 && numsArray.length !== 10){
             invalidReason.push("lengthCheck_failed");
         }
-    }    
+    };
+
     // check invalid letter
     const test2 = text => {
-        const numsArray = textToNums(text);
-        console.log(numsArray);
+        const numsArray = textToNums(text);        
         const isThereNan = numsArray.some((el) => Number.isNaN(el));        
         if (isThereNan){
             invalidReason.push("lettercheck_failed");
         }
-    }
+    };
+
+    //check country code when length is 11
+    const test3 = text => {
+        const numsArray = textToNums(text);
+        if ( numsArray.length === 11 && numsArray[0] !== 1){
+            invalidReason.push("countrycodecheck_failed");            
+        };
+    };
 
     // check letter index
     // possible index for '(' = 0,2 
     // possible index for ')' = 4,5
     // possible index for '-' = 3,4,7,8
     // possible index for space = 1, 5, 7, 9
+    
+    const test4 = text => {
+        console.log("test4")        ;
+    }
 
     const tests = {
         test1,
-        test2
+        test2,
+        test3
     };
     
     let testnumber = 1;
     while ( testnumber <= Object.keys(tests).length ){
         tests[`test${testnumber}`](text);
-        testnumber += 1;        
-        console.log("testlength", Object.keys(tests).length);
+        testnumber += 1;                
     }    
 
     return invalidReason.length === 0 ? "Valid" : "Invalid"
