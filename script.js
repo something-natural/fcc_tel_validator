@@ -114,8 +114,7 @@ const parse = text => {
     const test4 = text => {
         const availIndex = [0,1];
         const regex = /\(/;
-        const regexPair = /\)/;
-        if (illegalIndexLength(text,regex,availIndex) > 0 || indexToArray(text,regex) !== indexToArray(text,regexPair)){
+        if (illegalIndexLength(text,regex,availIndex) > 0 ){
             invalidReason.push("signindexcheck_faild");
         };
     };
@@ -123,8 +122,7 @@ const parse = text => {
     const test5 = text => {
         const availIndex = [4,5];
         const regex = /\)/;
-        const regexPair = /\(/;
-        if (illegalIndexLength(text,regex,availIndex) > 0 || indexToArray(text,regex) !== indexToArray(text,regexPair)){
+        if (illegalIndexLength(text,regex,availIndex) > 0 ){
             invalidReason.push("signindexcheck_faild");
         };
     };
@@ -146,6 +144,14 @@ const parse = text => {
         };
     };
 
+    const test8 = text => {
+        const regex = /\)/;
+        const regexPair = /\(/;
+        if (indexToArray(text,regex) !== indexToArray(text,regexPair)){
+            invalidReason.push("bracketpaircheck_faild");
+        };
+    };
+
     // make test object, do while loop, return judgement
     const tests = {
         test1,
@@ -158,9 +164,9 @@ const parse = text => {
     };
     let testnumber = 1;
     while ( invalidReason.length < 1  ){
-        tests[`test${testnumber}`](text);
-        testnumber += 1;
         console.log("testnumber", testnumber);
+        tests[`test${testnumber}`](text);
+        testnumber += 1;        
         if (testnumber > Object.keys(tests).length){
             break;
         };
